@@ -11,6 +11,9 @@ function startGame() {
         return;
     }
 
+    // Définir aléatoirement qui commence
+    currentPlayer = Math.random() > 0.5 ? 'X' : 'O';
+
     alert("Le jeu commence entre " + player1Name + " et " + player2Name + " !");
 
     document.getElementById('players').style.display = 'none';
@@ -32,11 +35,20 @@ function updateCurrentPlayerDisplay() {
 function handleCellClick(event) {
     event.target.textContent = currentPlayer;
 
-    if (checkWin()) {
+    const winningCombination = checkWin();
+    if (winningCombination) {
         const winnerName = currentPlayer === 'X' ? player1Name : player2Name;
-        highlightWinningCells();
+        highlightWinningCells(winningCombination);
         setTimeout(() => {
             alert(winnerName + " a gagné !");
+            showReplayButton();
+        }, 100);
+        return;
+    }
+
+    if (isGridFull()) {
+        setTimeout(() => {
+            alert("C'est un match nul !");
             showReplayButton();
         }, 100);
         return;
@@ -63,13 +75,15 @@ function checkWin() {
     return null;
 }
 
-function highlightWinningCells() {
-    const winningCombination = checkWin();
-    if (winningCombination) {
-        winningCombination.forEach(index => {
-            document.querySelectorAll('.case')[index].style.backgroundColor = 'lightgreen'; // Change la couleur des cases gagnantes
-        });
-    }
+function highlightWinningCells(winningCombination) {
+    winningCombination.forEach(index => {
+        document.querySelectorAll('.case')[index].style.backgroundColor = 'lightgreen'; // Change la couleur des cases gagnantes
+    });
+}
+
+function isGridFull() {
+    const cases = document.querySelectorAll('.case');
+    return Array.from(cases).every(cell => cell.textContent !== '');
 }
 
 function showReplayButton() {
