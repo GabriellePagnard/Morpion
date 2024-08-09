@@ -37,7 +37,7 @@ function handleCellClick(event) {
         highlightWinningCells();
         setTimeout(() => {
             alert(winnerName + " a gagné !");
-            resetGame();
+            showReplayButton();
         }, 100);
         return;
     }
@@ -72,14 +72,34 @@ function highlightWinningCells() {
     }
 }
 
+function showReplayButton() {
+    const playerDisplay = document.getElementById('currentPlayerDisplay');
+    playerDisplay.innerHTML = ''; // Vide le contenu actuel
+
+    // Crée un bouton "Rejouer"
+    const replayButton = document.createElement('button');
+    replayButton.textContent = 'Rejouer';
+    replayButton.onclick = resetGame; // Associe la fonction de réinitialisation au bouton
+
+    playerDisplay.appendChild(replayButton); // Ajoute le bouton au DOM
+}
+
 function resetGame() {
-    // Remet le jeu à zéro
+    // Réinitialise la grille
     document.querySelectorAll('.case').forEach(cell => {
         cell.textContent = '';
         cell.style.backgroundColor = '#f0f0f0';
     });
+
+    // Réinitialise les noms des joueurs et réaffiche les inputs
+    document.getElementById('player1').value = '';
+    document.getElementById('player2').value = '';
     document.getElementById('players').style.display = 'block';
+
+    // Cache la grille et le bouton "Rejouer"
     document.getElementById('gameGrid').style.display = 'none';
+    document.getElementById('currentPlayerDisplay').innerHTML = '';
+
+    // Réinitialise le joueur actuel
     currentPlayer = 'X';
-    document.getElementById('currentPlayerDisplay').textContent = '';
 }
