@@ -8,25 +8,40 @@
 </head>
 <body>
 
-    <div id="players">
-        <input type="text" id="player1" placeholder="Nom du joueur 1">
-        <input type="text" id="player2" placeholder="Nom du joueur 2">
-        <button onclick="startGame()">Commencer le jeu</button>
+    <div class="background-blur"></div> <!-- Arrière-plan flou -->
+    <div class="overlay"></div> <!-- Couche sombre -->
+
+    <!-- Pop-up pour entrer les noms des joueurs -->
+    <div id="popup" class="popup" style="display: block;">  <!-- Assurez-vous que ce style est présent -->
+        <div class="popup-content">
+            <input type="text" id="player1" placeholder="Nom du joueur 1">
+            <input type="text" id="player2" placeholder="Nom du joueur 2">
+            <button onclick="startGame()">Commencer le jeu</button>
+        </div>
     </div>
 
-    <div class="grid" id="gameGrid">
-        <div class="case"></div>
-        <div class="case"></div>
-        <div class="case"></div>    
-        <div class="case"></div>
-        <div class="case"></div>
-        <div class="case"></div>
-        <div class="case"></div>
-        <div class="case"></div>
-        <div class="case"></div>
+    <!-- Grille du morpion -->
+    <div class="grid blur" id="gameGrid">  <!-- Ajoutez "blur" pour que la grille soit floutée au début -->
+        <div class="case" data-index="0"></div>
+        <div class="case" data-index="1"></div>
+        <div class="case" data-index="2"></div>    
+        <div class="case" data-index="3"></div>
+        <div class="case" data-index="4"></div>
+        <div class="case" data-index="5"></div>
+        <div class="case" data-index="6"></div>
+        <div class="case" data-index="7"></div>
+        <div class="case" data-index="8"></div>
     </div>
 
+    <!-- Affichage du nom du joueur actuel -->
     <div id="currentPlayerDisplay"></div>
+
+    <!-- Pop-up pour rejouer -->
+    <div id="replayPopup" class="popup">
+        <div class="popup-content">
+            <button onclick="resetGame()">Rejouer</button>
+        </div>
+    </div>
 
     <script src="./app.js"></script>
 </body>

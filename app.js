@@ -16,8 +16,8 @@ function startGame() {
 
     alert("Le jeu commence entre " + player1Name + " et " + player2Name + " !");
 
-    document.getElementById('players').style.display = 'none';
-    document.getElementById('gameGrid').style.display = 'grid';
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('gameGrid').classList.remove('blur');
 
     updateCurrentPlayerDisplay();
 
@@ -29,11 +29,15 @@ function startGame() {
 
 function updateCurrentPlayerDisplay() {
     const currentPlayerName = currentPlayer === 'X' ? player1Name : player2Name;
-    document.getElementById('currentPlayerDisplay').textContent = "C'est au tour de " + currentPlayerName + " de jouer";
+    document.getElementById('currentPlayerDisplay').innerHTML = `C'est au tour de <br>${currentPlayerName} de jouer`;
 }
 
 function handleCellClick(event) {
-    event.target.textContent = currentPlayer;
+    if (currentPlayer === 'X') {
+        event.target.classList.add('emoji-x');
+    } else {
+        event.target.classList.add('emoji-o');
+    }
 
     const winningCombination = checkWin();
     if (winningCombination) {
@@ -41,7 +45,7 @@ function handleCellClick(event) {
         highlightWinningCells(winningCombination);
         setTimeout(() => {
             alert(winnerName + " a gagné !");
-            showReplayButton();
+            showReplayPopup();
         }, 100);
         return;
     }
@@ -49,7 +53,7 @@ function handleCellClick(event) {
     if (isGridFull()) {
         setTimeout(() => {
             alert("C'est un match nul !");
-            showReplayButton();
+            showReplayPopup();
         }, 100);
         return;
     }
@@ -68,7 +72,8 @@ function checkWin() {
 
     for (const combination of winningCombinations) {
         const [a, b, c] = combination;
-        if (cases[a].textContent && cases[a].textContent === cases[b].textContent && cases[a].textContent === cases[c].textContent) {
+        if (cases[a].classList.contains('emoji-x') && cases[b].classList.contains('emoji-x') && cases[c].classList.contains('emoji-x') ||
+            cases[a].classList.contains('emoji-o') && cases[b].classList.contains('emoji-o') && cases[c].classList.contains('emoji-o')) {
             return combination; // Retourne la combinaison gagnante
         }
     }
@@ -83,36 +88,32 @@ function highlightWinningCells(winningCombination) {
 
 function isGridFull() {
     const cases = document.querySelectorAll('.case');
-    return Array.from(cases).every(cell => cell.textContent !== '');
+    return Array.from(cases).every(cell => cell.classList.contains('emoji-x') || cell.classList.contains('emoji-o'));
 }
 
-function showReplayButton() {
-    const playerDisplay = document.getElementById('currentPlayerDisplay');
-    playerDisplay.innerHTML = ''; // Vide le contenu actuel
-
-    // Crée un bouton "Rejouer"
-    const replayButton = document.createElement('button');
-    replayButton.textContent = 'Rejouer';
-    replayButton.onclick = resetGame; // Associe la fonction de réinitialisation au bouton
-
-    playerDisplay.appendChild(replayButton); // Ajoute le bouton au DOM
+function showReplayPopup() {
+    document.getElementById('replayPopup').style.display = 'block';
+    document.getElementById('gameGrid').classList.add('blur');
 }
 
 function resetGame() {
     // Réinitialise la grille
     document.querySelectorAll('.case').forEach(cell => {
-        cell.textContent = '';
-        cell.style.backgroundColor = '#f0f0f0';
+        cell.classList.remove('emoji-x', 'emoji-o');
+        cell.style.backgroundColor = 'white';
     });
 
-    // Réinitialise les noms des joueurs et réaffiche les inputs
+    // Cache le texte du joueur actuel
+    document.getElementById('currentPlayerDisplay').textContent = '';
+
+    // Réaffiche la pop-up pour les noms et réinitialise les champs de texte
+    document.getElementById('popup').style.display = 'block';
     document.getElementById('player1').value = '';
     document.getElementById('player2').value = '';
-    document.getElementById('players').style.display = 'block';
 
-    // Cache la grille et le bouton "Rejouer"
-    document.getElementById('gameGrid').style.display = 'none';
-    document.getElementById('currentPlayerDisplay').innerHTML = '';
+    // Réinitialise la grille
+    document.getElementById('gameGrid').classList.add('blur');
+    document.getElementById('replayPopup').style.display = 'none';
 
     // Réinitialise le joueur actuel
     currentPlayer = 'X';
