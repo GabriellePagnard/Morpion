@@ -1,40 +1,164 @@
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 100px);
-    grid-template-rows: repeat(3, 100px);
-    gap: 5px;
-}
-
-.case {
-    background-color: #f0f0f0;
-    border: 1px solid #000;
+/* Réinitialisation du style du body */
+body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 24px;
-    font-weight: bold;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    position: relative;
+    overflow: hidden;
 }
 
-#players {
-    text-align: center;
-    margin-bottom: 20px;
+/* Création d'une couche pour l'image d'arrière-plan avec un flou réduit */
+.background-blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('./Ressources/arriere_plan.webp');
+    background-size: cover;
+    background-position: center;
+    filter: blur(3px); /* Réduction du flou appliqué à l'arrière-plan */
+    z-index: 1;
 }
 
-#players input {
-    margin: 5px;
-    padding: 10px;
-    font-size: 16px;
+/* Ajout d'une couche sombre semi-transparente pour faire ressortir la grille */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Couche sombre */
+    z-index: 2;
+    pointer-events: none; /* Permet de cliquer à travers cette couche */
 }
 
-#players button {
-    padding: 10px 20px;
-    font-size: 16px;
+/* Style de la grille */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 150px); /* Agrandir la grille */
+    grid-template-rows: repeat(3, 150px);    /* Agrandir la grille */
+    gap: 10px; /* Espacement entre les cases */
+    background-color: rgba(0, 0, 0, 0.7); /* Fond noir légèrement transparent */
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 3; /* Assurer que la grille est au-dessus de la couche sombre */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Ajout d'une ombre pour la grille */
+}
+
+/* Style des cases de la grille */
+.case {
+    background-color: transparent; /* Aucun fond de couleur pour les cases */
+    border: 2px solid #ccc; /* Changer la bordure en gris moyen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+.case:hover {
+    background-color: rgba(240, 240, 240, 0.1); /* Légèrement transparent lors du survol */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Accentuer le survol */
+}
+
+/* Ajustement de la taille des images pour X et O */
+.emoji-x,
+.emoji-o {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Ajustement de la taille des images pour X et O */
+.emoji-x,
+.emoji-o {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Images spécifiques pour X et O avec fond transparent */
+.emoji-x {
+    background-image: url('./Ressources/symbole_x.png'); /* Chemin de l'image X avec fond transparent */
+}
+
+.emoji-o {
+    background-image: url('./Ressources/symbole_o.png'); /* Chemin de l'image O avec fond transparent */
+}
+
+
+/* Style du texte du joueur actuel */
 #currentPlayerDisplay {
     text-align: center;
     margin-top: 20px;
-    font-size: 18px;
+    margin-bottom: 30px; /* Ajout d'espace pour éloigner le texte de la grille */
+    margin-left: 20px;
+    font-size: 20px;
     font-weight: bold;
+    color: #ffffff; /* Couleur claire pour contraster avec le fond noir */
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.7); /* Fond noir légèrement transparent */
+    border-radius: 5px;
+    z-index: 3; /* Assurer que le texte est au-dessus de la couche sombre */
+}
+
+/* Style des pop-ups */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.9); /* Fond noir pour les pop-ups */
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* Accentuer l'ombre pour le pop-up */
+    border-radius: 10px;
+    z-index: 4; /* Pop-up au-dessus de tout */
+    display: none;
+    color: #f5f5f5; /* Texte en blanc pour contraster avec le fond noir */
+}
+
+.popup-content {
+    text-align: center;
+}
+
+.popup-content input {
+    margin: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc; /* Gris moyen pour les bordures */
+    width: 80%;
+    background-color: rgba(255, 255, 255, 0.1); /* Fond légèrement transparent */
+    color: #f5f5f5; /* Texte en blanc */
+}
+
+.popup-content button {
+    padding: 30px 50px;
+    font-size: 20px;
+    font-weight: bolder;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #262626; /* Boutons en gris moyen */
+    color: #f5f5f5; /* Texte en blanc */
+}
+
+.popup-content button:hover {
+    background-color: #777; /* Gris plus clair au survol */
+}
+
+/* Effet de flou sur la grille lorsqu'une pop-up est affichée */
+.blur {
+    filter: blur(5px);
+    pointer-events: none;
 }
