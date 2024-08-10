@@ -25,15 +25,15 @@ Bienvenue dans le projet Jeu du Morpion ! Ce jeu classique de morpion (ou tic-ta
 
 Voici à quoi ressemble l'application :   
 
-![screenshot démarrage](ressources/screenshot_demarrage_jeu.jpg)
+![screenshot démarrage](ressources/screenshot_demarrage_jeu.jpg)   
 
-![screenshot démarrage joueurs](ressources/screenshot_demarrage_jeu_joueurs.jpg)
+![screenshot démarrage joueurs](ressources/screenshot_demarrage_jeu_joueurs.jpg)   
 
-![screenshot jeu en cours](ressources/screenshot_jeu_en_cours.jpg)
+![screenshot jeu en cours](ressources/screenshot_jeu_en_cours.jpg)   
 
-![screenshot annonce gagnant](ressources/screenshot_annonce%20gagnantjpg.jpg)
+![screenshot annonce gagnant](ressources/screenshot_annonce%20gagnantjpg.jpg)   
 
-![screenshot rejouer](ressources/screenshot_rejouer.jpg)
+![screenshot rejouer](ressources/screenshot_rejouer.jpg)   
 
 [Démo vidéo du projet 🎥](https://www.youtube.com/watch?v=YpDL0R0R4lw)
 
