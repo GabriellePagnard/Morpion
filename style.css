@@ -76,16 +76,6 @@ body {
     background-position: center;
 }
 
-/* Ajustement de la taille des images pour X et O */
-.emoji-x,
-.emoji-o {
-    width: 100%;
-    height: 100%;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
 /* Images spécifiques pour X et O avec fond transparent */
 .emoji-x {
     background-image: url('./Ressources/symbole_x.png'); /* Chemin de l'image X avec fond transparent */
@@ -157,7 +147,7 @@ body {
     background-color: #777; /* Gris plus clair au survol */
 }
 
-/* Effet de flou sur la grille lorsqu'une pop-up est affichée */
+/* Effet de flou sur la grille et le message du joueur lorsqu'une pop-up est affichée */
 .blur {
     filter: blur(5px);
     pointer-events: none;

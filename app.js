@@ -95,6 +95,7 @@ function isGridFull() {
 function showReplayPopup() {
     document.getElementById('replayPopup').style.display = 'block';
     document.getElementById('gameGrid').classList.add('blur');
+    document.getElementById('currentPlayerDisplay').classList.add('blur'); // Ajoute le flou au message du joueur
 }
 
 function resetGame() {
@@ -112,8 +113,9 @@ function resetGame() {
     document.getElementById('player1').value = '';
     document.getElementById('player2').value = '';
 
-    // Réinitialise la grille
+    // Réinitialise la grille et le message du joueur
     document.getElementById('gameGrid').classList.add('blur');
+    document.getElementById('currentPlayerDisplay').classList.remove('blur'); // Enlève le flou du message du joueur
     document.getElementById('replayPopup').style.display = 'none';
 
     // Réinitialise le joueur actuel
