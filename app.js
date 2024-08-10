@@ -1,3 +1,4 @@
+// Variables globales pour le jeu
 let currentPlayer = 'X';
 let player1Name = '';
 let player2Name = '';
@@ -100,7 +101,7 @@ function resetGame() {
     // Réinitialise la grille
     document.querySelectorAll('.case').forEach(cell => {
         cell.classList.remove('emoji-x', 'emoji-o');
-        cell.style.backgroundColor = 'white';
+        cell.style.backgroundColor = 'transparent'; // Assure que le fond reste transparent
     });
 
     // Cache le texte du joueur actuel
