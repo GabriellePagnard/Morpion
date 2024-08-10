@@ -1,27 +1,34 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <!-- Métadonnées de base -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jeu du Morpion</title>
+    <!-- Lien vers la feuille de style CSS -->
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
-    <div class="background-blur"></div> <!-- Arrière-plan flou -->
-    <div class="overlay"></div> <!-- Couche sombre -->
+    <!-- Image d'arrière-plan floue -->
+    <div class="background-blur"></div> 
+    <!-- Couche sombre pour atténuer l'arrière-plan -->
+    <div class="overlay"></div> 
 
-    <!-- Pop-up pour entrer les noms des joueurs -->
-    <div id="popup" class="popup" style="display: block;">  <!-- Assurez-vous que ce style est présent -->
+    <!-- Pop-up pour entrer les noms des joueurs, affichée au début -->
+    <div id="popup" class="popup" style="display: block;">
         <div class="popup-content">
+            <!-- Champs pour entrer les noms des joueurs -->
             <input type="text" id="player1" placeholder="Nom du joueur 1">
             <input type="text" id="player2" placeholder="Nom du joueur 2">
+            <!-- Bouton pour démarrer le jeu -->
             <button onclick="startGame()">Commencer le jeu</button>
         </div>
     </div>
 
-    <!-- Grille du morpion -->
-    <div class="grid blur" id="gameGrid">  <!-- Ajoutez "blur" pour que la grille soit floutée au début -->
+    <!-- Grille du jeu de morpion -->
+    <div class="grid blur" id="gameGrid">
+        <!-- Chaque div représente une case de la grille -->
         <div class="case" data-index="0"></div>
         <div class="case" data-index="1"></div>
         <div class="case" data-index="2"></div>    
@@ -33,16 +40,18 @@
         <div class="case" data-index="8"></div>
     </div>
 
-    <!-- Affichage du nom du joueur actuel -->
+    <!-- Zone d'affichage du nom du joueur actuel -->
     <div id="currentPlayerDisplay"></div>
 
-    <!-- Pop-up pour rejouer -->
+    <!-- Pop-up pour rejouer après la fin de la partie -->
     <div id="replayPopup" class="popup">
         <div class="popup-content">
+            <!-- Bouton pour réinitialiser et rejouer la partie -->
             <button onclick="resetGame()">Rejouer</button>
         </div>
     </div>
 
+    <!-- Lien vers le fichier JavaScript pour gérer la logique du jeu -->
     <script src="./app.js"></script>
 </body>
 </html>

@@ -1,76 +1,109 @@
-// Variables globales pour le jeu
-let currentPlayer = 'X';
-let player1Name = '';
-let player2Name = '';
+/**
+ * @file app.js
+ * @description Fichier principal pour la gestion du jeu de morpion. Contient les fonctions de démarrage, de gestion des clics, de vérification des conditions de victoire, et de réinitialisation du jeu.
+ */
 
+// Variables globales pour le jeu
+let currentPlayer = 'X'; // Définit le joueur courant (X ou O)
+let player1Name = ''; // Nom du joueur 1
+let player2Name = ''; // Nom du joueur 2
+
+/**
+ * @function startGame
+ * @description Démarre le jeu en initialisant les noms des joueurs et en définissant aléatoirement qui commence.
+ */
 function startGame() {
     player1Name = document.getElementById('player1').value;
     player2Name = document.getElementById('player2').value;
 
+    // Vérifie que les noms des deux joueurs sont bien renseignés
     if (player1Name === "" || player2Name === "") {
         alert("Veuillez entrer les noms des deux joueurs.");
         return;
     }
 
-    // Définir aléatoirement qui commence
+    // Détermine aléatoirement le joueur qui commence
     currentPlayer = Math.random() > 0.5 ? 'X' : 'O';
 
+    // Affiche un message pour annoncer le début du jeu
     alert("Le jeu commence entre " + player1Name + " et " + player2Name + " !");
 
+    // Cache la pop-up d'entrée des noms et enlève le flou de la grille
     document.getElementById('popup').style.display = 'none';
     document.getElementById('gameGrid').classList.remove('blur');
 
+    // Met à jour l'affichage du joueur actuel
     updateCurrentPlayerDisplay();
 
+    // Ajoute un écouteur d'événement de clic à chaque case de la grille
     const cases = document.querySelectorAll('.case');
     cases.forEach(cell => {
         cell.addEventListener('click', handleCellClick, { once: true });
     });
 }
 
+/**
+ * @function updateCurrentPlayerDisplay
+ * @description Met à jour l'affichage pour indiquer à qui c'est le tour de jouer.
+ */
 function updateCurrentPlayerDisplay() {
     const currentPlayerName = currentPlayer === 'X' ? player1Name : player2Name;
     document.getElementById('currentPlayerDisplay').innerHTML = `C'est au tour de <br>${currentPlayerName} de jouer`;
 }
 
+/**
+ * @function handleCellClick
+ * @description Gère le clic sur une case de la grille et vérifie les conditions de victoire ou d'égalité.
+ * @param {Event} event - L'événement de clic sur une case de la grille.
+ */
 function handleCellClick(event) {
+    // Ajoute la classe correspondant au joueur courant (X ou O) à la case cliquée
     if (currentPlayer === 'X') {
         event.target.classList.add('emoji-x');
     } else {
         event.target.classList.add('emoji-o');
     }
 
+    // Vérifie s'il y a un gagnant après ce coup
     const winningCombination = checkWin();
     if (winningCombination) {
         const winnerName = currentPlayer === 'X' ? player1Name : player2Name;
-        highlightWinningCells(winningCombination);
+        highlightWinningCells(winningCombination); // Met en surbrillance les cases gagnantes
         setTimeout(() => {
             alert(winnerName + " a gagné !");
-            showReplayPopup();
+            showReplayPopup(); // Affiche la pop-up pour rejouer
         }, 100);
         return;
     }
 
+    // Vérifie si la grille est remplie sans gagnant (match nul)
     if (isGridFull()) {
         setTimeout(() => {
             alert("C'est un match nul !");
-            showReplayPopup();
+            showReplayPopup(); // Affiche la pop-up pour rejouer
         }, 100);
         return;
     }
 
+    // Change de joueur pour le tour suivant
     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-    updateCurrentPlayerDisplay();
+    updateCurrentPlayerDisplay(); // Met à jour l'affichage du joueur actuel
 }
 
+/**
+ * @function checkWin
+ * @description Vérifie si un joueur a gagné en comparant les cases de la grille aux combinaisons gagnantes prédéfinies.
+ * @returns {Array|null} La combinaison gagnante si elle existe, sinon null.
+ */
 function checkWin() {
     const cases = document.querySelectorAll('.case');
     const winningCombinations = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontales
-        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Verticales
-        [0, 4, 8], [2, 4, 6]             // Diagonales
+        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Combinaisons horizontales
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Combinaisons verticales
+        [0, 4, 8], [2, 4, 6]             // Combinaisons diagonales
     ];
 
+    // Parcourt les combinaisons gagnantes et vérifie si une condition est remplie
     for (const combination of winningCombinations) {
         const [a, b, c] = combination;
         if (cases[a].classList.contains('emoji-x') && cases[b].classList.contains('emoji-x') && cases[c].classList.contains('emoji-x') ||
@@ -81,25 +114,43 @@ function checkWin() {
     return null;
 }
 
+/**
+ * @function highlightWinningCells
+ * @description Change la couleur des cases qui font partie d'une combinaison gagnante.
+ * @param {Array} winningCombination - Les indices des cases qui composent la combinaison gagnante.
+ */
 function highlightWinningCells(winningCombination) {
     winningCombination.forEach(index => {
         document.querySelectorAll('.case')[index].style.backgroundColor = 'lightgreen'; // Change la couleur des cases gagnantes
     });
 }
 
+/**
+ * @function isGridFull
+ * @description Vérifie si toutes les cases de la grille sont remplies (c'est-à-dire, si un match nul s'est produit).
+ * @returns {boolean} True si la grille est pleine, sinon false.
+ */
 function isGridFull() {
     const cases = document.querySelectorAll('.case');
     return Array.from(cases).every(cell => cell.classList.contains('emoji-x') || cell.classList.contains('emoji-o'));
 }
 
+/**
+ * @function showReplayPopup
+ * @description Affiche la pop-up pour rejouer et applique un effet de flou à la grille et au message du joueur.
+ */
 function showReplayPopup() {
     document.getElementById('replayPopup').style.display = 'block';
     document.getElementById('gameGrid').classList.add('blur');
     document.getElementById('currentPlayerDisplay').classList.add('blur'); // Ajoute le flou au message du joueur
 }
 
+/**
+ * @function resetGame
+ * @description Réinitialise le jeu pour permettre de rejouer. Supprime les classes des cases, réinitialise les noms et l'affichage.
+ */
 function resetGame() {
-    // Réinitialise la grille
+    // Réinitialise la grille en supprimant les classes et en rétablissant les styles initiaux
     document.querySelectorAll('.case').forEach(cell => {
         cell.classList.remove('emoji-x', 'emoji-o');
         cell.style.backgroundColor = 'transparent'; // Assure que le fond reste transparent
@@ -118,6 +169,6 @@ function resetGame() {
     document.getElementById('currentPlayerDisplay').classList.remove('blur'); // Enlève le flou du message du joueur
     document.getElementById('replayPopup').style.display = 'none';
 
-    // Réinitialise le joueur actuel
+    // Réinitialise le joueur actuel à X
     currentPlayer = 'X';
 }

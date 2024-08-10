@@ -85,7 +85,6 @@ body {
     background-image: url('./Ressources/symbole_o.png'); /* Chemin de l'image O avec fond transparent */
 }
 
-
 /* Style du texte du joueur actuel */
 #currentPlayerDisplay {
     text-align: center;
