@@ -139,4 +139,4 @@ GitHub : [GabriellePagnard](https://github.com/GabriellePagnard)
 Merci d'avoir visité le projet Morpion ! 🚀   
 
 Nous espérons que vous vous amuserez autant en jouant au Jeu du Morpion que nous avons eu à le développer ! 🎉 
-N'hésitez pas à laisser un ⭐ si vous aimez ce projet !  
+N'hésitez pas à laisser un ⭐ si vous aimez ce projet !    
