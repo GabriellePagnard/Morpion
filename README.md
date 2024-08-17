@@ -59,10 +59,10 @@ Pour l'utiliser : [Morpion 🎮](https://gabriellepagnard.github.io/Morpion/)
 
 ## 📂 Fichiers du Projet
 
-- index.html : Structure HTML de la page web.   
-- style.css : Styles CSS pour l'apparence de l'application   
-- app.js : Script JavaScript pour la logique de recherche, la gestion des résultats et les interactions avec l'API    
-- ressources/ : Dossier contenant les images et les icônes (y compris l'arrière plan, le favicon et les captures d'écran)   
+- index.html : Structure du jeu   
+- style.css : Feuille de style personnalisée   
+- app.js : Script pour la logique du jeu    
+- ressources/ : Images et ressources pour l'interface   
 
 <br>
 <br>
@@ -70,7 +70,7 @@ Pour l'utiliser : [Morpion 🎮](https://gabriellepagnard.github.io/Morpion/)
 
 ## 🛠️ Installation et Utilisation
 
-Pour démarrer avec Calculatrice, suivez ces étapes simples :   
+Pour démarrer avec Jeu du Morpion, suivez ces étapes simples :   
 
 ➡️ Clonez le Répertoire :   
 
